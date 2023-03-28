@@ -10,6 +10,15 @@ body{
     align-items: center;
 }
 
+.bg-color-lseagreen{
+    background-color: lightseagreen;
+}
+
+.bg-color-lsalmon{
+    background-color: lightsalmon;
+}
+
+
 .main{
     background-color: red;
     width: 100%;
@@ -26,7 +35,17 @@ body{
     width: 100%;
 }
 
+.game{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
 
+.cell{
+    height: 6em;
+    width: 6em;
+    border: 2px solid black;
+}
 
 .hidden {
     display: none;
