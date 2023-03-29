@@ -46,24 +46,24 @@
                 <div class="col"><button type="button" class="btn btn-dark main-button">Start game</button></div>
             </div>
         </div>
-        <div class="container-fluid game justify-content-center text-center flex hidden">
+        <div class="container-fluid game justify-content-center text-center flex ">
             <h1><span class="lseagreen">Tic</span> Tac <span class="lsalmon">Toe</span></h1>
             <div class="linea"></div>
             <br>
             <div class="row">
-                <div class="col-4 bg-color-lseagreen cell"></div>
-                <div class="col-4 bg-color-lsalmon cell"></div>
-                <div class="col-4 bg-color-lseagreen cell"></div>
+                <div class="col-4 bg-color-lseagreen cell" id="box1" onclick="colocarFicha(0,0,1)"></div>
+                <div class="col-4 bg-color-lsalmon cell" id="box2" onclick="colocarFicha(0,1,2)"></div>
+                <div class="col-4 bg-color-lseagreen cell" id="box3" onclick="colocarFicha(0,2,3)"></div>
             </div>
             <div class="row">
-                <div class="col-4 bg-color-lsalmon cell"></div>
-                <div class="col-4 bg-color-lseagreen cell"></div>
-                <div class="col-4 bg-color-lsalmon cell"></div>
+                <div class="col-4 bg-color-lsalmon cell" id="box4" onclick="colocarFicha(1,0,4)"></div>
+                <div class="col-4 bg-color-lseagreen cell" id="box5" onclick="colocarFicha(1,1,5)"></div>
+                <div class="col-4 bg-color-lsalmon cell" id="box6" onclick="colocarFicha(1,2,6)"></div>
             </div>
             <div class="row">
-                <div class="col-4 bg-color-lseagreen cell"></div>
-                <div class="col-4 bg-color-lsalmon cell"></div>
-                <div class="col-4 bg-color-lseagreen cell"></div>
+                <div class="col-4 bg-color-lseagreen cell" id="box7" onclick="colocarFicha(2,0,7)"></div>
+                <div class="col-4 bg-color-lsalmon cell" id="box8" onclick="colocarFicha(2,1,8)"></div>
+                <div class="col-4 bg-color-lseagreen cell" id="box9" onclick="colocarFicha(2,2,9)"></div>
             </div>
         </div>
 
@@ -76,5 +76,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
     <script src="jquery-3.6.3.min.js"></script>
+    <script src="dist/main.js"></script>
 </body>
 </html>

@@ -64,6 +64,9 @@ body{
     width: 6em;
     border: 2px solid black;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hidden {
