@@ -102,4 +102,12 @@ const clearTablero = () => {
     player1Turns = 3;
     player2Turns = 3;
 };
+const nextPage = (page) => {
+    let views = document.querySelectorAll('.container-fluid');
+    let actualPage = document.querySelector(`.${page}`);
+    for (let i = 0; i < views.length; i++) {
+        views[i].classList.add("hidden");
+    }
+    actualPage.classList.remove("hidden");
+};
 //# sourceMappingURL=main.js.map
