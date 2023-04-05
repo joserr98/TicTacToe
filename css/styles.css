@@ -198,6 +198,44 @@ body{
     font-size: 4rem;
 }
 
+.error{
+    background-color: #f8de3c
+}
+
+.yellow{
+    color: #f8de3c
+}
+
+.chopper{
+    height: 4em;
+    width: 4em;
+    background-image: url(../assets/chopper.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.luffy{
+    height: 4em;
+    width: 4em;
+    background-image: url(../assets/luffy.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#nickname2:focus{
+    background-color: #0b3075;
+    color:white
+}
+
+#nickname:focus{
+    background-color: #0b3075;
+    color:white
+}
+
+.tag{
+    border-color:#412a1e
+}
+
 @media (max-width: 750px) {
     .logo{
         font-size: 10rem;

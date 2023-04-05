@@ -7,6 +7,7 @@ let lastQuit;
 let gameOver = false;
 const views = document.querySelectorAll('.container-fluid');
 let currentViewIndex = 0;
+var regex = "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/";
 const ticTacToeBoard = [
     ['', '', ''],
     ['', '', ''],
@@ -105,9 +106,53 @@ const clearTablero = () => {
 const nextPage = (page) => {
     let views = document.querySelectorAll('.container-fluid');
     let actualPage = document.querySelector(`.${page}`);
+    let nickname = document.querySelector('#nickname').value;
+    let nickname2 = document.querySelector('#nickname2').value;
+    if (page === 'game') {
+        if (document.querySelector('#select-num-players1').checked === true) {
+            if (nickname === '') {
+                document.querySelector('#nickname-tag').classList.add('error');
+                document.querySelector('#nickname').classList.add('error');
+                document.querySelector('.comprobar').classList.remove('hidden');
+                return;
+            }
+            else {
+                document.querySelector('#nickname-tag').classList.remove('error');
+                document.querySelector('#nickname').classList.remove('error');
+            }
+            if (nickname2 === '') {
+                document.querySelector('#nickname2-tag').classList.add('error');
+                document.querySelector('#nickname2').classList.add('error');
+                document.querySelector('.comprobar').classList.remove('hidden');
+                return;
+            }
+            else {
+                document.querySelector('#nickname2-tag').classList.remove('error');
+                document.querySelector('#nickname2').classList.remove('error');
+            }
+        }
+        else {
+            if (nickname === '') {
+                document.querySelector('#nickname-tag').classList.add('error');
+                document.querySelector('#nickname').classList.add('error');
+                document.querySelector('.comprobar').classList.remove('hidden');
+                return;
+            }
+        }
+    }
     for (let i = 0; i < views.length; i++) {
         views[i].classList.add("hidden");
     }
     actualPage.classList.remove("hidden");
+};
+const disableSecondPlayer = () => {
+    let radio2 = document.querySelector('#select-num-players2');
+    let nickname2 = document.querySelector('#nickname2');
+    if (radio2.checked === true) {
+        nickname2.disabled = true;
+    }
+    else {
+        nickname2.disabled = false;
+    }
 };
 //# sourceMappingURL=main.js.map
