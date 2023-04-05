@@ -160,8 +160,8 @@ body{
 }
 
 .cell{
-    height: 9em;
-    width: 9em;
+    height: 8em;
+    width: 8em;
     border: 3px solid black;
     text-align: center;
     display: flex;
@@ -204,6 +204,11 @@ body{
 
 .yellow{
     color: #f8de3c
+}
+
+.mini-cell{
+    max-width: 4em;
+    max-height: 4em;
 }
 
 .chopper{
