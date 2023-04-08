@@ -211,20 +211,32 @@ body{
     max-height: 4em;
 }
 
+.character-image{
+    width: 3em;
+    height: 3em;
+}
+
+.players-bar{
+    width: 100%;
+}
+
+.pd-mg-0{
+    padding:0;
+    margin:0
+}
+
 .chopper{
-    height: 4em;
-    width: 4em;
     background-image: url(../assets/chopper.png);
     background-size: cover;
     background-repeat: no-repeat;
+    z-index: 999;
 }
 
 .luffy{
-    height: 4em;
-    width: 4em;
     background-image: url(../assets/luffy.png);
     background-size: cover;
     background-repeat: no-repeat;
+    z-index: 999;
 }
 
 #nickname2:focus{
