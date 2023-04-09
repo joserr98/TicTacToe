@@ -30,6 +30,24 @@ body{
     width: 10em;
 }
 
+.restart-button{
+    background-color:#272838 ;
+    color: #f8de3c;
+    border: 2px solid #105edd;
+    font-size: 1.3rem;
+    height: 2em;
+    width: 4em;
+}
+
+.initial-button{
+    background-color:#272838 ;
+    color: #f8de3c;
+    border: 2px solid #105edd;
+    font-size: 1.3rem;
+    height: 2em;
+    width: 5em;
+}
+
 .button-start{
     display: flex;
     justify-content: center;
@@ -141,6 +159,17 @@ body{
 
 }
 
+.winner-winner{
+    margin-top: 6em;
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    border: 10px solid #412a1e;
+    border-radius: 8%;
+    height: 16em;
+    background-color: #c8472c;
+}
+
 .start-button:hover{
     background-color:#105edd ;
     color: #f8de3c;
@@ -186,7 +215,7 @@ body{
 
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .how-to img{
@@ -211,9 +240,20 @@ body{
     max-height: 4em;
 }
 
+
+
 .character-image{
     width: 3em;
     height: 3em;
+}
+
+.character-image-winner{
+    width: 8em;
+    height: 8em;
+}
+
+.text-winner{
+    font-size: 3rem;
 }
 
 .players-bar{

@@ -50,7 +50,7 @@ const checkWin = () => {
         return ticTacToeBoard[0][2];
 };
 const cambiarTurno = () => {
-    currentPlayer == "x" ? (currentPlayer = "o") : (currentPlayer = "x");
+    currentPlayer == "x" ? currentPlayer = "o" : currentPlayer = "x";
     if (currentPlayer === "x") {
         ficha = 'luffy';
         nick = nickname;
@@ -64,11 +64,11 @@ const reducirContador = () => {
     let turns;
     if (currentPlayer === "x") {
         player1Turns = player1Turns - 1;
-        turns = player1Turns;
+        turns = player2Turns;
     }
     else {
         player2Turns = player2Turns - 1;
-        turns = player2Turns;
+        turns = player1Turns;
     }
     return turns;
 };
@@ -84,8 +84,8 @@ const colocarFicha = (cell) => {
     const box = document.querySelector(`#${cell}`);
     const row = document.querySelector(`#${cell}`).dataset.row;
     const column = document.querySelector(`#${cell}`).dataset.column;
-    let turnos = comprobarTurnos();
-    if (true) {
+    let turnos = checkTurns();
+    if (document.querySelector("#select-num-players1").checked === true) {
         if (currentPlayer) {
             if (turnos > 0) {
                 if (ticTacToeBoard[row][column] === '' && box != lastQuit) {
@@ -93,13 +93,21 @@ const colocarFicha = (cell) => {
                     box.innerHTML = currentPlayer;
                     box.classList.add(`${ficha}`);
                     let turns = reducirContador();
+                    if (turns > 0) {
+                        document.querySelector('.turn-counter').innerHTML = `You have ${turns} turns left`;
+                    }
+                    else {
+                        document.querySelector('.turn-counter').innerHTML = `You have no turns left to place. Remove a token from you.`;
+                    }
                     let winner = checkWin();
                     if (winner) {
+                        showWinner();
                         clearTablero();
+                        lastQuit = '';
+                        return;
                     }
                     cambiarTurno();
-                    document.querySelector('.turn-name').innerHTML = `Turno de ${nick}`;
-                    document.querySelector('.turn-counter').innerHTML = `Te quedan ${turnos} turnos`;
+                    document.querySelector('.turn-name').innerHTML = `${nick}'s turn`;
                 }
             }
             else {
@@ -108,7 +116,7 @@ const colocarFicha = (cell) => {
                     ticTacToeBoard[row][column] = "";
                     box.innerHTML = "";
                     box.classList.remove(`${ficha}`);
-                    document.querySelector('.turn-counter').innerHTML = `Te quedan ${turnos} turnos`;
+                    document.querySelector('.turn-counter').innerHTML = `Place the token in another cell.`;
                     aumentarContador();
                 }
             }
@@ -117,37 +125,45 @@ const colocarFicha = (cell) => {
     else {
         if (turnos > 0) {
             if (ticTacToeBoard[row][column] === '' && box != lastQuit) {
-                ticTacToeBoard[row][column] = currentPlayer;
-                box.classList.add(`${ficha}`);
+                ticTacToeBoard[row][column] = 'x';
+                box.innerHTML = 'x';
+                box.classList.add(`luffy`);
                 reducirContador();
                 let winner = checkWin();
                 if (winner) {
-                    //   clearTablero();
-                    alert('Ganador ');
+                    showWinner();
+                    clearTablero();
+                    lastQuit = '';
                     return;
                 }
                 AIMovement(ticTacToeBoard);
                 let winnerAI = checkWin();
                 if (winnerAI) {
-                    //   clearTablero();
-                    alert('Ganador IA');
+                    showWinner();
+                    clearTablero();
+                    return;
+                }
+                if (player1Turns > 0) {
+                    document.querySelector('.turn-counter').innerHTML = `You have ${player1Turns} turns left`;
+                }
+                else {
+                    document.querySelector('.turn-counter').innerHTML = `You have no turns left to place. Remove a token from you.`;
                 }
             }
         }
         else {
-            if (box.innerHTML !== "" && box.innerHTML === currentPlayer) {
+            if (box.innerHTML !== "" && box.innerHTML === 'x') {
                 lastQuit = box;
                 ticTacToeBoard[row][column] = "";
                 box.innerHTML = "";
                 box.classList.remove(`${ficha}`);
                 aumentarContador();
-                // AIMovement(ticTacToeBoard);
+                document.querySelector('.turn-counter').innerHTML = `Place the token in another cell.`;
             }
         }
     }
-    console.log(player2Turns);
 };
-const comprobarTurnos = () => {
+const checkTurns = () => {
     if (currentPlayer === "x") {
         return player1Turns;
     }
@@ -175,10 +191,13 @@ const nextPage = (page) => {
     let actualPage = document.querySelector(`.${page}`);
     nickname = document.querySelector("#nickname").value;
     nickname2 = document.querySelector("#nickname2").value;
+    if (document.querySelector("#select-num-players2").checked === true) {
+        nickname2 = 'Chopper';
+    }
     document.querySelector('#player1').innerHTML = nickname;
     document.querySelector('#player2').innerHTML = nickname2;
-    document.querySelector('.turn-name').innerHTML = `Turno de ${nickname}`;
-    document.querySelector('.turn-counter').innerHTML = `Te quedan ${player1Turns} turnos`;
+    document.querySelector('.turn-name').innerHTML = `${nickname}'s turn`;
+    document.querySelector('.turn-counter').innerHTML = `You have ${player1Turns} turns left`;
     if (page === "game") {
         if (document.querySelector("#select-num-players1").checked === true) {
             if (nickname === "") {
@@ -211,6 +230,11 @@ const nextPage = (page) => {
             }
         }
     }
+    if (page === "game") {
+        document.querySelector('.winner-winner').classList.add('hidden');
+        document.querySelector("#nickname").value = "";
+        document.querySelector("#nickname2").value = "";
+    }
     for (let i = 0; i < views.length; i++) {
         views[i].classList.add("hidden");
     }
@@ -226,16 +250,16 @@ const disableSecondPlayer = () => {
         nickname2.disabled = false;
     }
 };
-function emptyPositions(arr) {
-    let emptyPositions = [];
+function checkAvailablePositions() {
+    let availablePositions = [];
     for (let i = 0; i < ticTacToeBoard.length; i++) {
         for (let j = 0; j < ticTacToeBoard.length; j++) {
             if (ticTacToeBoard[i][j] == '') {
-                emptyPositions.push([i, j]);
+                availablePositions.push([i, j]);
             }
         }
     }
-    return emptyPositions;
+    return availablePositions;
 }
 function OPositions(arr) {
     let OPositions = [];
@@ -248,37 +272,64 @@ function OPositions(arr) {
     }
     return OPositions;
 }
-const AIMovement = (arr) => {
+const AIMovement = (arr, excl) => {
     if (player2Turns > 0) {
-        const posicionesVacias = emptyPositions(arr);
-        const indiceAleatorio = Math.floor(Math.random() * posicionesVacias.length);
-        const posicionAleatoria = posicionesVacias[indiceAleatorio];
-        arr[posicionAleatoria[0]][posicionAleatoria[1]] = 'o';
+        const availablePositions = checkAvailablePositions();
+        if (excl) {
+            removeElementFromArray(availablePositions, excl);
+        }
+        const randomIndex = Math.floor(Math.random() * availablePositions.length);
+        const newPosition = availablePositions[randomIndex];
+        arr[newPosition[0]][newPosition[1]] = 'o';
         let cells = document.querySelectorAll('.cell');
         const arrayPositions = [];
         for (let i = 0; i < cells.length; i++) {
             arrayPositions.push(cells[i]);
         }
-        let posiciones123 = Array.from({ length: 3 }, (_, i) => arrayPositions.slice(i * 3, (i + 1) * 3));
-        // posiciones123[posicionAleatoria[0]][posicionAleatoria[1]].innerHTML = 'o';
-        posiciones123[posicionAleatoria[0]][posicionAleatoria[1]].classList.add('chopper');
+        let cellsArray = Array.from({ length: 3 }, (_, i) => arrayPositions.slice(i * 3, (i + 1) * 3));
+        cellsArray[newPosition[0]][newPosition[1]].classList.add('chopper');
         player2Turns--;
     }
     else {
-        const posicionesO = OPositions(arr);
-        const indiceAleatorio = Math.floor(Math.random() * posicionesO.length);
-        const posicionO = posicionesO[indiceAleatorio];
-        arr[posicionO[0]][posicionO[1]] = '';
+        const AIPositions = OPositions(arr);
+        const randomIndex = Math.floor(Math.random() * AIPositions.length);
+        const AIPosition = AIPositions[randomIndex];
+        arr[AIPosition[0]][AIPosition[1]] = '';
         let cells = document.querySelectorAll('.cell');
         const arrayPositions = [];
         for (let i = 0; i < cells.length; i++) {
             arrayPositions.push(cells[i]);
         }
-        let posiciones123 = Array.from({ length: 3 }, (_, i) => arrayPositions.slice(i * 3, (i + 1) * 3));
-        posiciones123[posicionO[0]][posicionO[1]].innerHTML = '';
-        posiciones123[posicionO[0]][posicionO[1]].classList.remove('chopper');
+        let cellsArray = Array.from({ length: 3 }, (_, i) => arrayPositions.slice(i * 3, (i + 1) * 3));
+        cellsArray[AIPosition[0]][AIPosition[1]].innerHTML = '';
+        cellsArray[AIPosition[0]][AIPosition[1]].classList.remove('chopper');
         player2Turns++;
-        AIMovement(arr);
+        AIMovement(arr, AIPosition);
     }
+};
+const removeElementFromArray = (arr, excl) => {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i][0] === excl[0] && arr[i][1] === excl[1]) {
+            arr.splice(i, 1);
+            i--;
+        }
+    }
+    return arr;
+};
+const showWinner = () => {
+    document.querySelector('.winner-winner').classList.remove('hidden');
+    document.querySelector('.character-image-winner').classList.add(`${ficha}`);
+    if (nick) {
+        document.querySelector('.text-winner').innerHTML = `${nick} has won!!`;
+    }
+};
+const restartGame = () => {
+    document.querySelector('.winner-winner').classList.add('hidden');
+    document.querySelector('.character-image-winner').classList.remove(`${ficha}`);
+    document.querySelector('.turn-name').innerHTML = `${nick}'s turn`;
+    player1Turns = 3;
+    player2Turns = 3;
+    let turnos = checkTurns();
+    document.querySelector('.turn-counter').innerHTML = `You have ${turnos} left`;
 };
 //# sourceMappingURL=main.js.map
