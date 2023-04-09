@@ -13,13 +13,14 @@ body{
     background-size: 2em 2em; */
 }
 
-
 .logo{
     font-size: 15rem;
 }
+
 .logo2{
     font-size: 6rem;
 }
+
 .start-button{
     margin-top: -1em;
     background-color:#272838 ;
@@ -92,29 +93,19 @@ body{
     justify-content: end;
 }
 
-/* .logo{
-    background-image: url("../assets/logo.png");
-    width: 10em;
-    height: 7em;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.image-logo{
-    height: auto;
-    max-width: 100%;
-} */
-
 .bg-color-lseagreen{
     background-color: #f8de3c;
 }
+
 .tic{
     color: #58acf4;
 }
+
 .toe{
     color: #0b3075;
     margin-top: -0.5em;
 }
+
 .tac{
     color:  #f8de3c
 }
@@ -126,7 +117,6 @@ body{
 .bg-color-lsalmon{
     background-color: #412a1e;
 }
-
 
 .main{
     font-size: 2rem;
@@ -203,16 +193,17 @@ body{
     border-left: 3px solid black;
     border-right: 3px solid black;
 }
+
 .border-row2{
     border-left: 3px solid black;
     border-right: 3px solid black;
 }
+
 .border-row3{
     border-left: 3px solid black;
     border-right: 3px solid black;
     border-bottom: 3px solid black;
 }
-
 
 .hidden {
     display: none !important;
@@ -239,8 +230,6 @@ body{
     max-width: 4em;
     max-height: 4em;
 }
-
-
 
 .character-image{
     width: 3em;

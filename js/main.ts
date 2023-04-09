@@ -114,7 +114,7 @@ const colocarFicha = (cell: string) => {
           }
           let winner = checkWin();
           if (winner) {
-            showWinner()
+            showWinner(nick,ficha)
             clearTablero();
             lastQuit=''
             return
@@ -143,7 +143,7 @@ const colocarFicha = (cell: string) => {
           reducirContador();
           let winner = checkWin();
           if (winner) {
-            showWinner()
+            showWinner(nickname,ficha)
             clearTablero();
             lastQuit=''
             return
@@ -151,7 +151,7 @@ const colocarFicha = (cell: string) => {
           AIMovement(ticTacToeBoard);
           let winnerAI = checkWin();
           if (winnerAI) {
-            showWinner()
+            showWinner('Chopper','chopper')
             clearTablero();
             return
           }
@@ -160,6 +160,7 @@ const colocarFicha = (cell: string) => {
           } else {
             document.querySelector('.turn-counter').innerHTML = `You have no turns left to place. Remove a token from you.`
           }
+          document.querySelector('.turn-name').innerHTML = `${nickname}'s turn`
         } 
     } else {
       if (box.innerHTML !== "" && box.innerHTML === 'x') {
@@ -290,7 +291,7 @@ function OPositions(arr) {
   }
   return OPositions
 }
-const AIMovement = (arr,excl) => {
+const AIMovement = (arr,excl?) => {
 
   if (player2Turns > 0){
     const availablePositions = checkAvailablePositions();
@@ -337,12 +338,10 @@ const removeElementFromArray = (arr,excl) => {
   return arr;
 }
 
-const showWinner = () => {
+const showWinner = (nick,ficha) => {
   document.querySelector('.winner-winner').classList.remove('hidden')
   document.querySelector('.character-image-winner').classList.add(`${ficha}`)
-  if (nick){
-    document.querySelector('.text-winner').innerHTML = `${nick} has won!!`
-  }
+  document.querySelector('.text-winner').innerHTML = `${nick} has won!!`
 }
 
 const restartGame = () => {
