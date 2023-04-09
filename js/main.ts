@@ -116,7 +116,6 @@ const colocarFicha = (cell: string) => {
           if (winner) {
             showWinner(nick,ficha)
             clearTablero();
-            lastQuit=''
             return
           }
 
@@ -145,7 +144,6 @@ const colocarFicha = (cell: string) => {
           if (winner) {
             showWinner(nickname,ficha)
             clearTablero();
-            lastQuit=''
             return
           }
           AIMovement(ticTacToeBoard);
@@ -197,6 +195,7 @@ const clearTablero = () => {
   }
   player1Turns = 3;
   player2Turns = 3;
+  lastQuit = '';
 };
 
 const nextPage = (page: string) => {

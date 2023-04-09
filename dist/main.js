@@ -103,7 +103,6 @@ const colocarFicha = (cell) => {
                     if (winner) {
                         showWinner(nick, ficha);
                         clearTablero();
-                        lastQuit = '';
                         return;
                     }
                     cambiarTurno();
@@ -133,7 +132,6 @@ const colocarFicha = (cell) => {
                 if (winner) {
                     showWinner(nickname, ficha);
                     clearTablero();
-                    lastQuit = '';
                     return;
                 }
                 AIMovement(ticTacToeBoard);
@@ -186,6 +184,7 @@ const clearTablero = () => {
     }
     player1Turns = 3;
     player2Turns = 3;
+    lastQuit = '';
 };
 const nextPage = (page) => {
     let views = document.querySelectorAll(".container-fluid");
