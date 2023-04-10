@@ -10,7 +10,7 @@ You can deploy my project here: https://joserr98.github.io/TicTacToe/
 
 ### Index
 
-<img  src="assets/main-page.png"  alt="main-page"/>
+<img  src="./assets/main-page.png"  alt="main-page"/>
 
 ### Players selection
 
