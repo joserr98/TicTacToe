@@ -11,7 +11,7 @@ You can deploy my project here: https://joserr98.github.io/TicTacToe/
 ### Index
 
 <img  src="./assets/main-page.PNG"  alt="main-page"/>
-
+gi
 ### Players selection
 
 Here is the players selection, you can play against another person or vs IA (easy mode)
