@@ -10,20 +10,20 @@ You can deploy my project here: https://joserr98.github.io/TicTacToe/
 
 ### Index
 
-<img  src="assets/main-page.png"  alt="main-page"/>
+<img  src="./assets/main-page.PNG"  alt="main-page"/>
 
 ### Players selection
 
 Here is the players selection, you can play against another person or vs IA (easy mode)
-<img  src="assets/players-selection.png"  alt="players-selection"/>
+<img  src="./assets/players-selection.PNG"  alt="players-selection"/>
 
 ### Game
 
-<img  src="assets/game.png"  alt="game"/>
+<img src="./assets/game.PNG"  alt="game"/>
 
 ### Winning
 
-<img  src="assets/winning.png"  alt="winning"/>
+<img src="./assets/winning.PNG"  alt="winning"/>
 
 ### Contáctame:
 
