@@ -8,13 +8,12 @@ let lastQuit;
 let ficha: String = 'luffy';
 let gameOver = false;
 const views = document.querySelectorAll(".container-fluid");
-let nickname
-let nickname2
-let nick 
+let nickname: string
+let nickname2: string
+let nick: string
 
 let currentViewIndex = 0;
-var regex =
-  "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
+
 const ticTacToeBoard: Array<Array<fichas>> = [
   ["", "", ""],
   ["", "", ""],
@@ -83,6 +82,7 @@ const reduceCounter = () => {
     player2Turns = player2Turns - 1;
     turns = player1Turns
   }
+
   return turns
 };
 
@@ -100,11 +100,9 @@ const setToken = (cell: string) => {
   const column = (document.querySelector(`#${cell}`) as any).dataset.column
   let turnos = checkTurns();
   if ( (document.querySelector("#select-num-players1") as any).checked === true) {
-    if (currentPlayer) {
       if (turnos > 0) {
         if (ticTacToeBoard[row][column] === '' && box != lastQuit) {
           ticTacToeBoard[row][column] = currentPlayer;
-          box.innerHTML = currentPlayer;
           box.classList.add(`${ficha}`)
           let turns = reduceCounter();
           if (turns > 0){
@@ -123,26 +121,24 @@ const setToken = (cell: string) => {
           document.querySelector('.turn-name').innerHTML = `${nick}'s turn`
         }
       } else {
-        if (box.innerHTML !== "" && box.innerHTML === currentPlayer) {
+        if (ticTacToeBoard[row][column] !== "" && ticTacToeBoard[row][column] === currentPlayer) {
           lastQuit = box;
           ticTacToeBoard[row][column] = "";
-          box.innerHTML = "";
           box.classList.remove(`${ficha}`)
           document.querySelector('.turn-counter').innerHTML = `Place the token in another cell.`
           increaseCounter();
         }
       }
-    }
   } else {
     if (turnos > 0) {
+        currentPlayer = 'x'
         if (ticTacToeBoard[row][column] === '' && box != lastQuit) {
           ticTacToeBoard[row][column] = 'x';
-          box.innerHTML = 'x';
           box.classList.add(`luffy`)
-          reduceCounter();
+          player1Turns--;
           let winner = checkWin();
           if (winner) {
-            showWinner(nickname,ficha)
+            showWinner(nickname,'luffy')
             clearBoard();
             return
           }
@@ -161,13 +157,12 @@ const setToken = (cell: string) => {
           document.querySelector('.turn-name').innerHTML = `${nickname}'s turn`
         } 
     } else {
-      if (box.innerHTML !== "" && box.innerHTML === 'x') {
+      if (ticTacToeBoard[row][column] !== "" && ticTacToeBoard[row][column] === 'x') {
         lastQuit = box;
         ticTacToeBoard[row][column] = "";
-        box.innerHTML = "";
-        box.classList.remove(`${ficha}`)
-        increaseCounter();
+        box.classList.remove(`luffy`)
         document.querySelector('.turn-counter').innerHTML = `Place the token in another cell.`
+        increaseCounter();
       }
   }
   }
@@ -338,6 +333,8 @@ const removeElementFromArray = (arr,excl) => {
 }
 
 const showWinner = (nick,ficha) => {
+  document.querySelector('.character-image-winner').classList.remove(`chopper`)
+  document.querySelector('.character-image-winner').classList.remove(`luffy`)
   document.querySelector('.winner-winner').classList.remove('hidden')
   document.querySelector('.character-image-winner').classList.add(`${ficha}`)
   document.querySelector('.text-winner').innerHTML = `${nick} has won!!`
