@@ -1,11 +1,11 @@
-type fichas = "x" | "o" | "";
+type tokens = "x" | "o" | "";
 const player1 = "x";
 const player2 = "o";
 let player1Turns = 3;
 let player2Turns = 3;
-let currentPlayer: fichas = "x";
+let currentPlayer: tokens = "x";
 let lastQuit;
-let ficha: String = 'luffy';
+let token: String = 'luffy';
 let gameOver = false;
 const views = document.querySelectorAll(".container-fluid");
 let nickname: string
@@ -14,23 +14,13 @@ let nick: string
 
 let currentViewIndex = 0;
 
-const ticTacToeBoard: Array<Array<fichas>> = [
+const ticTacToeBoard: Array<Array<tokens>> = [
   ["", "", ""],
   ["", "", ""],
   ["", "", ""],
 ];
 
-const changeView = () => {
-  for (let i = 0; i < views.length; i++) {
-    views[i].classList.add("hidden");
-  }
-  views[currentViewIndex].classList.remove("hidden");
-  currentViewIndex++;
-  if (currentViewIndex >= views.length) {
-    currentViewIndex = 0;
-  }
-};
-
+// Function that check's if there's a winning position.
 const checkWin = () => {
   for (let i = 0; i < ticTacToeBoard.length; i++) {
     if (
@@ -62,17 +52,19 @@ const checkWin = () => {
     return ticTacToeBoard[0][2];
 };
 
+// Function that checks whose player is playing and changes.
 const changeTurn = () => {
   currentPlayer == "x" ? currentPlayer = "o" : currentPlayer = "x";
   if(currentPlayer === "x"){
-    ficha = 'luffy'
+    token = 'luffy'
     nick = nickname
   } else {
-    ficha = 'chopper'
+    token = 'chopper'
     nick = nickname2
   }
 };
 
+// Reduces the counter of both players
 const reduceCounter = () => {
   let turns: number
   if (currentPlayer === "x") {
@@ -86,6 +78,7 @@ const reduceCounter = () => {
   return turns
 };
 
+// Increases the counter of both players
 const increaseCounter = () => {
   if (currentPlayer === "x") {
     player1Turns = player1Turns + 1;
@@ -94,6 +87,7 @@ const increaseCounter = () => {
   }
 };
 
+// Game function. Has all the logic since you set a token on the board.
 const setToken = (cell: string) => {
   const box = document.querySelector(`#${cell}`);
   const row = (document.querySelector(`#${cell}`) as any).dataset.row
@@ -103,7 +97,7 @@ const setToken = (cell: string) => {
       if (turnos > 0) {
         if (ticTacToeBoard[row][column] === '' && box != lastQuit) {
           ticTacToeBoard[row][column] = currentPlayer;
-          box.classList.add(`${ficha}`)
+          box.classList.add(`${token}`)
           let turns = reduceCounter();
           if (turns > 0){
             document.querySelector('.turn-counter').innerHTML = `You have ${turns} turns left`
@@ -112,11 +106,10 @@ const setToken = (cell: string) => {
           }
           let winner = checkWin();
           if (winner) {
-            showWinner(nick,ficha)
+            showWinner(nick,token)
             clearBoard();
             return
           }
-
           changeTurn();
           document.querySelector('.turn-name').innerHTML = `${nick}'s turn`
         }
@@ -124,12 +117,13 @@ const setToken = (cell: string) => {
         if (ticTacToeBoard[row][column] !== "" && ticTacToeBoard[row][column] === currentPlayer) {
           lastQuit = box;
           ticTacToeBoard[row][column] = "";
-          box.classList.remove(`${ficha}`)
+          box.classList.remove(`${token}`)
           document.querySelector('.turn-counter').innerHTML = `Place the token in another cell.`
           increaseCounter();
         }
       }
   } else {
+    // This happens when you play vs the IA.
     if (turnos > 0) {
         currentPlayer = 'x'
         if (ticTacToeBoard[row][column] === '' && box != lastQuit) {
@@ -168,6 +162,7 @@ const setToken = (cell: string) => {
   }
 };
 
+// Checks how many turns a player has.
 const checkTurns = (): number => {
   if (currentPlayer === "x") {
     return player1Turns;
@@ -176,6 +171,7 @@ const checkTurns = (): number => {
   }
 };
 
+// Clears the board in the array and in HTML.
 const clearBoard = () => {
   for (let i = 0; i < ticTacToeBoard.length; i++) {
     for (let j = 0; j < ticTacToeBoard.length; j++) {
@@ -188,26 +184,26 @@ const clearBoard = () => {
     cell[i].classList.remove('luffy')
     cell[i].classList.remove('chopper')
   }
-  player1Turns = 3;
-  player2Turns = 3;
-  lastQuit = '';
 };
 
-const nextPage = (page: string) => {
-  let views = document.querySelectorAll(".container-fluid");
-  let actualPage = document.querySelector(`.${page}`);
-
+// Set data in their divs once it is verified.
+const setData = () => {
   nickname = (document.querySelector("#nickname") as any).value;
   nickname2 = (document.querySelector("#nickname2") as any).value;
-
-  if ((document.querySelector("#select-num-players2") as any).checked === true) {
-    nickname2 = 'Chopper'
-  }
-
   document.querySelector('#player1').innerHTML = nickname
   document.querySelector('#player2').innerHTML = nickname2
   document.querySelector('.turn-name').innerHTML = `${nickname}'s turn`
   document.querySelector('.turn-counter').innerHTML = `You have ${player1Turns} turns left`
+  if ((document.querySelector("#select-num-players2") as any).checked === true) {
+    nickname2 = 'Chopper'
+  }
+}
+
+// Hides current page and show you the next page.
+const nextPage = (page: string) => {
+  let views = document.querySelectorAll(".container-fluid");
+  let nextPage = document.querySelector(`.${page}`);
+  
   if (page === "game") {
     if ((document.querySelector("#select-num-players1") as any).checked === true) {
       if (nickname === "") {
@@ -238,19 +234,14 @@ const nextPage = (page: string) => {
     }
   }
 
-  if (page === "game") {
-    document.querySelector('.winner-winner').classList.add('hidden');
-    (document.querySelector("#nickname") as any).value = "";
-    (document.querySelector("#nickname2") as any).value = "";
-  }
-
   for (let i = 0; i < views.length; i++) {
     views[i].classList.add("hidden");
   }
 
-  actualPage.classList.remove("hidden");
+  nextPage.classList.remove("hidden");
 };
 
+// Disables the input of the second player if you select playing vs IA.
 const disableSecondPlayer = () => {
   let radio2 = (document.querySelector("#select-num-players2") as any);
   let nickname2 = (document.querySelector("#nickname2") as any);
@@ -261,6 +252,7 @@ const disableSecondPlayer = () => {
   }
 };
 
+// Checks all available positions in the main board.
 function checkAvailablePositions() {
   let availablePositions: any = []
   for (let i = 0; i < ticTacToeBoard.length; i++){
@@ -273,9 +265,9 @@ function checkAvailablePositions() {
   return availablePositions
 }
 
-function OPositions(arr) {
+// Checks the positions where an "o" is setted
+function OPositions() {
   let OPositions: any = []
-
   for (let i = 0; i < ticTacToeBoard.length; i++){
     for (let j = 0; j < ticTacToeBoard.length; j++){
       if(ticTacToeBoard[i][j] == 'o'){
@@ -285,8 +277,9 @@ function OPositions(arr) {
   }
   return OPositions
 }
-const AIMovement = (arr,excl?) => {
 
+// Controls if IA has to set a token or remove it.
+const AIMovement = (arr,excl?) => {
   if (player2Turns > 0){
     const availablePositions = checkAvailablePositions();
     if (excl) {
@@ -305,7 +298,7 @@ const AIMovement = (arr,excl?) => {
     cellsArray[newPosition[0]][newPosition[1]].classList.add('chopper');
     player2Turns--;
   } else {
-    const AIPositions = OPositions(arr);
+    const AIPositions = OPositions();
     const randomIndex = Math.floor(Math.random() * AIPositions.length);
     const AIPosition = AIPositions[randomIndex];
     arr[AIPosition[0]][AIPosition[1]] = '';
@@ -322,6 +315,7 @@ const AIMovement = (arr,excl?) => {
   }
 }
 
+// Removes the position from the last token taken off from the array of all empty positions
 const removeElementFromArray = (arr,excl) => {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i][0] === excl[0] && arr[i][1] === excl[1]) {
@@ -332,20 +326,27 @@ const removeElementFromArray = (arr,excl) => {
   return arr;
 }
 
-const showWinner = (nick,ficha) => {
+// Show a div with the info needed when any player wins
+const showWinner = (nick,token) => {
   document.querySelector('.character-image-winner').classList.remove(`chopper`)
   document.querySelector('.character-image-winner').classList.remove(`luffy`)
   document.querySelector('.winner-winner').classList.remove('hidden')
-  document.querySelector('.character-image-winner').classList.add(`${ficha}`)
+  document.querySelector('.character-image-winner').classList.add(`${token}`)
   document.querySelector('.text-winner').innerHTML = `${nick} has won!!`
 }
 
+// Resets all fields.
 const restartGame = () => {
-  document.querySelector('.winner-winner').classList.add('hidden')
-  document.querySelector('.character-image-winner').classList.remove(`${ficha}`)
+  document.querySelector('.winner-winner').classList.add('hidden');
+  (document.querySelector("#nickname") as any).value = "";
+  (document.querySelector("#nickname2") as any).value = "";
+  document.querySelector('.character-image-winner').classList.remove(`${token}`)
   document.querySelector('.turn-name').innerHTML = `${nick}'s turn`
   player1Turns = 3;
   player2Turns = 3;
+  lastQuit = '';
   let turnos = checkTurns();
   document.querySelector('.turn-counter').innerHTML = `You have ${turnos} left`
+  document.querySelector(".comprobar").classList.add("hidden");
+
 }
